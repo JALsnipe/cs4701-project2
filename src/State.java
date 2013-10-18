@@ -4,7 +4,7 @@ import java.util.List;
 
 public class State {
 	
-	private ArrayList<ArrayList<String>> data;
+	ArrayList<ArrayList<String>> data;
 	private State parent;
 	private List<State> children;
 	
@@ -29,6 +29,9 @@ public class State {
 	}
 	
 	public String toString() {
+		for(ArrayList<String> temp : data) {
+			System.out.println(temp);
+		}
 		return data.toString();
 	}
 	
@@ -37,6 +40,27 @@ public class State {
 		this.data = data;
 		children = new ArrayList<State>();
 		
+	}
+	
+	public boolean equals(Object obj) {
+		//if the object is a state
+		//if it's not, return false
+		//if it is, start to compare the contents
+		//compare data
+		//if this.data.equals(input object data) return true
+		//else return false
+		
+		if(!(obj instanceof State)) {
+			return false;
+		}
+		
+		State temp = (State) obj;
+		
+		if (this.data.equals(temp.data)) {
+			return true;	
+		} else {
+			return false;
+		}
 	}
 	
 }

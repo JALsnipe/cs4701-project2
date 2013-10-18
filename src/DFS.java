@@ -1,10 +1,10 @@
 import java.util.HashSet;
-import java.util.LinkedList;
+import java.util.Stack;
 
 
-public class BFS implements Search {
+public class DFS implements Search {
 
-	LinkedList<State> queue = new LinkedList<State>(); //stack for DFS, greedy + A* - priority queue
+	Stack<State> stack = new Stack<State>(); //stack for DFS, greedy + A* - priority queue
 	HashSet<State> visited = new HashSet<State>();
 
 	public boolean checkGoal(State state) {
@@ -25,6 +25,8 @@ public class BFS implements Search {
 	@Override
 	public State searchGoal(State currentState) {
 		
+		System.out.println("in search");
+		
 		// pass goal back up
 		// pass queue down
 		
@@ -39,12 +41,19 @@ public class BFS implements Search {
 			return currentState;
 		}
 		
+		System.out.println(currentState.toString());
+		stack.add(currentState);
 		
-		queue.add(currentState);
+		int count = 0;
 		
-		while(queue.size() != 0) {
+		while(stack.size() != 0) {
+			
+			if(count == 4) {
+				break;
+			}
+			count++;
 
-			State temp = queue.poll();  //pop the head
+			State temp = stack.pop();  //pop the head
 			visited.add(temp);
 			
 			State lc = Actions.goLeft(temp, Actions.getPlayerPosition(temp));
@@ -52,36 +61,42 @@ public class BFS implements Search {
 			State uc = Actions.goUp(temp, Actions.getPlayerPosition(temp));
 			State dc = Actions.goDown(temp, Actions.getPlayerPosition(temp));
 
-			if(!visited.contains(lc) && !queue.contains(lc) && lc != null) {
+			if(!visited.contains(lc) && !stack.contains(lc) && lc != null) {
 				if(checkGoal(lc)) {
 					return lc;
 				}
 				temp.addChild(lc);
-				this.queue.add(lc);
+				this.stack.add(lc);
+				System.out.println("lc action");
 			}
 			
-			if(!visited.contains(rc) && !queue.contains(rc) && rc != null) {
+			if(!visited.contains(rc) && !stack.contains(rc) && rc != null) {
 				if(checkGoal(rc)) {
 					return rc;
 				}
 				temp.addChild(rc);
-				this.queue.add(rc);
+				this.stack.add(rc);
+				System.out.println("rc action");
 			}
 			
-			if(!visited.contains(uc) && !queue.contains(uc) && uc != null) {
+			if(!visited.contains(uc) && !stack.contains(uc) && uc != null) {
 				if(checkGoal(uc)) {
 					return uc;
 				}
 				temp.addChild(uc);
-				this.queue.add(uc);
+				this.stack.add(uc);
+				System.out.println("uc action");
+				System.out.println(uc);
 			}
 			
-			if(!visited.contains(dc) && !queue.contains(dc) && dc != null) {
+			if(!visited.contains(dc) && !stack.contains(dc) && dc != null) {
 				if(checkGoal(dc)) {
 					return dc;
 				}
 				temp.addChild(dc);
-				this.queue.add(dc);
+				this.stack.add(dc);
+				System.out.println("dc action");
+				System.out.println(uc);
 			}
 
 //			return searchGoal(currentState);
