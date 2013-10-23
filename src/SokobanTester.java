@@ -45,9 +45,11 @@ public class SokobanTester {
 
 	public static void main(String[] args) {
 		
-		ArrayList<ArrayList<String>> puzzle = loadFile("puzzle.txt");
+//		ArrayList<ArrayList<String>> puzzle = loadFile("puzzle.txt");
 //		ArrayList<ArrayList<String>> puzzle = loadFile("left.txt");
-		
+//		ArrayList<ArrayList<String>> puzzle = loadFile("weird.txt");
+		ArrayList<ArrayList<String>> puzzle = loadFile("easy11.txt");
+
 		State parent = new State(puzzle);
 		
 		System.out.println("Welcome to Josh's Sokoban searcher!");

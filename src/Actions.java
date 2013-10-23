@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 
 
 public class Actions {
@@ -35,6 +36,40 @@ public class Actions {
 		}
 		return playerPosition;
 	}
+	
+	public boolean isValidLeftMove (State state, int[] playerPosition) {
+		
+		ArrayList<ArrayList<String>> temp;
+		temp =  copy(state.getData());
+		
+		if((temp.get(playerPosition[0]).get(playerPosition[1]).equals("@") ||
+				temp.get(playerPosition[0]).get(playerPosition[1]).equals("+")) && 
+				temp.get(playerPosition[0]).get(playerPosition[1] - 1).equals("#")) {
+			
+			return false;
+			
+		}
+		
+		if((temp.get(playerPosition[0]).get(playerPosition[1]).equals("@") ||
+				temp.get(playerPosition[0]).get(playerPosition[1]).equals("+")) && 
+				temp.get(playerPosition[0]).get(playerPosition[1] - 1).equals("$") &&
+				temp.get(playerPosition[0]).get(playerPosition[1] - 2).equals("#")) {
+			
+			return false;
+			
+		}
+		
+		if(temp.get(playerPosition[0]).get(playerPosition[1]).equals("@") && 
+				temp.get(playerPosition[0]).get(playerPosition[1] - 1).equals("$") &&
+				temp.get(playerPosition[0]).get(playerPosition[1] - 2).equals("$")) {
+			
+			return false;
+			
+		}
+		
+		return true;
+		
+	}
 
 	public static State goLeft (State state, int[] playerPosition) {
 
@@ -62,6 +97,8 @@ public class Actions {
 			newState.setParent(state);
 			state.addChild(newState);
 			//			System.out.println(newState);
+			newState.setParentMove('l');
+			newState.setCost(1);
 			return newState;
 
 		}
@@ -79,6 +116,8 @@ public class Actions {
 			newState.setParent(state);
 			state.addChild(newState);
 			//			System.out.println(newState);
+			newState.setParentMove('l');
+			newState.setCost(1);
 			return newState;
 
 		}
@@ -99,6 +138,8 @@ public class Actions {
 			newState.setParent(state);
 			state.addChild(newState);
 			//			System.out.println(newState);
+			newState.setParentMove('l');
+			newState.setCost(2);
 			return newState;
 
 		}
@@ -119,6 +160,8 @@ public class Actions {
 			newState.setParent(state);
 			state.addChild(newState);
 			//			System.out.println(newState);
+			newState.setParentMove('l');
+			newState.setCost(2);
 			return newState;
 
 		}
@@ -139,6 +182,8 @@ public class Actions {
 			newState.setParent(state);
 			state.addChild(newState);
 			//			System.out.println(newState);
+			newState.setParentMove('l');
+			newState.setCost(2);
 			return newState;
 
 		}
@@ -159,6 +204,8 @@ public class Actions {
 			newState.setParent(state);
 			state.addChild(newState);
 			//			System.out.println(newState);
+			newState.setParentMove('l');
+			newState.setCost(2);
 			return newState;
 
 		}
@@ -179,6 +226,8 @@ public class Actions {
 			newState.setParent(state);
 			state.addChild(newState);
 			//			System.out.println(newState);
+			newState.setParentMove('l');
+			newState.setCost(2);
 			return newState;
 
 		}
@@ -199,6 +248,8 @@ public class Actions {
 			newState.setParent(state);
 			state.addChild(newState);
 			//			System.out.println(newState);
+			newState.setParentMove('l');
+			newState.setCost(2);
 			return newState;
 
 		}
@@ -217,6 +268,8 @@ public class Actions {
 			newState.setParent(state);
 			state.addChild(newState);
 			//			System.out.println(newState);
+			newState.setParentMove('l');
+			newState.setCost(1);
 			return newState;
 
 		}
@@ -235,6 +288,8 @@ public class Actions {
 			newState.setParent(state);
 			state.addChild(newState);
 			//			System.out.println(newState);
+			newState.setParentMove('l');
+			newState.setCost(1);
 			return newState;
 
 		}
@@ -255,6 +310,8 @@ public class Actions {
 			newState.setParent(state);
 			state.addChild(newState);
 			//			System.out.println(newState);
+			newState.setParentMove('l');
+			newState.setCost(2);
 			return newState;
 
 		}
@@ -275,19 +332,23 @@ public class Actions {
 			newState.setParent(state);
 			state.addChild(newState);
 			//			System.out.println(newState);
+			newState.setParentMove('l');
+			newState.setCost(2);
 			return newState;
 
 		}
 
 		newState = new State(temp);
-		System.out.println("left: " + newState);
+//		System.out.println("left: " + newState);
 		newState.setParent(state);
 		state.addChild(newState);
 		//		System.out.println(newState);
+		newState.setParentMove('l');
+//		System.out.println("error");
 		return null;
 
 	}
-
+	
 	public static State goRight(State state, int[] playerPosition) {
 
 		ArrayList<ArrayList<String>> temp;
@@ -309,8 +370,10 @@ public class Actions {
 			newState.setParent(state);
 			state.addChild(newState);
 			//			System.out.println(newState);
-			System.out.println("first right action");
-			System.out.println(newState);
+//			System.out.println("first right action");
+//			System.out.println(newState);
+			newState.setParentMove('r');
+			newState.setCost(1);
 			return newState;
 
 		}
@@ -328,6 +391,8 @@ public class Actions {
 			newState.setParent(state);
 			state.addChild(newState);
 			//			System.out.println(newState);
+			newState.setParentMove('r');
+			newState.setCost(1);
 			return newState;
 
 		}
@@ -347,6 +412,8 @@ public class Actions {
 			newState = new State(temp);
 			newState.setParent(state);
 			state.addChild(newState);
+			newState.setParentMove('r');
+			newState.setCost(2);
 			return newState;
 
 		}
@@ -366,6 +433,8 @@ public class Actions {
 			newState = new State(temp);
 			newState.setParent(state);
 			state.addChild(newState);
+			newState.setParentMove('r');
+			newState.setCost(2);
 			return newState;
 
 		}
@@ -385,6 +454,8 @@ public class Actions {
 			newState = new State(temp);
 			newState.setParent(state);
 			state.addChild(newState);
+			newState.setParentMove('r');
+			newState.setCost(2);
 			return newState;
 
 		}
@@ -404,6 +475,8 @@ public class Actions {
 			newState = new State(temp);
 			newState.setParent(state);
 			state.addChild(newState);
+			newState.setParentMove('r');
+			newState.setCost(2);
 			return newState;
 
 		}
@@ -423,6 +496,8 @@ public class Actions {
 			newState = new State(temp);
 			newState.setParent(state);
 			state.addChild(newState);
+			newState.setParentMove('r');
+			newState.setCost(2);
 			return newState;
 
 		}
@@ -442,6 +517,8 @@ public class Actions {
 			newState = new State(temp);
 			newState.setParent(state);
 			state.addChild(newState);
+			newState.setParentMove('r');
+			newState.setCost(2);
 			return newState;
 
 		}
@@ -459,6 +536,8 @@ public class Actions {
 			newState = new State(temp);
 			newState.setParent(state);
 			state.addChild(newState);
+			newState.setParentMove('r');
+			newState.setCost(1);
 			return newState;
 
 		}
@@ -476,6 +555,8 @@ public class Actions {
 			newState = new State(temp);
 			newState.setParent(state);
 			state.addChild(newState);
+			newState.setParentMove('r');
+			newState.setCost(1);
 			return newState;
 
 		}
@@ -496,6 +577,8 @@ public class Actions {
 			newState.setParent(state);
 			state.addChild(newState);
 			//			System.out.println(newState);
+			newState.setParentMove('r');
+			newState.setCost(2);
 			return newState;
 
 		}
@@ -516,14 +599,18 @@ public class Actions {
 			newState.setParent(state);
 			state.addChild(newState);
 			//			System.out.println(newState);
+			newState.setParentMove('r');
+			newState.setCost(2);
 			return newState;
 
 		}
 
 		newState = new State(temp);
-		System.out.println("right: " + newState);
+//		System.out.println("right: " + newState);
 		newState.setParent(state);
 		state.addChild(newState);
+		newState.setParentMove('r');
+//		System.out.println("error");
 		return null;
 
 	}
@@ -548,6 +635,8 @@ public class Actions {
 			newState = new State(temp);
 			newState.setParent(state);
 			state.addChild(newState);
+			newState.setParentMove('d');
+			newState.setCost(1);
 			return newState;
 
 		}
@@ -564,6 +653,8 @@ public class Actions {
 			newState = new State(temp);
 			newState.setParent(state);
 			state.addChild(newState);
+			newState.setParentMove('d');
+			newState.setCost(1);
 			return newState;
 
 		}
@@ -583,6 +674,8 @@ public class Actions {
 			newState = new State(temp);
 			newState.setParent(state);
 			state.addChild(newState);
+			newState.setParentMove('d');
+			newState.setCost(2);
 			return newState;
 
 		}
@@ -602,6 +695,8 @@ public class Actions {
 			newState = new State(temp);
 			newState.setParent(state);
 			state.addChild(newState);
+			newState.setParentMove('d');
+			newState.setCost(2);
 			return newState;
 
 		}
@@ -621,6 +716,8 @@ public class Actions {
 			newState = new State(temp);
 			newState.setParent(state);
 			state.addChild(newState);
+			newState.setParentMove('d');
+			newState.setCost(2);
 			return newState;
 
 		}
@@ -640,6 +737,8 @@ public class Actions {
 			newState = new State(temp);
 			newState.setParent(state);
 			state.addChild(newState);
+			newState.setParentMove('d');
+			newState.setCost(2);
 			return newState;
 
 		}
@@ -659,6 +758,8 @@ public class Actions {
 			newState = new State(temp);
 			newState.setParent(state);
 			state.addChild(newState);
+			newState.setParentMove('d');
+			newState.setCost(2);
 			return newState;
 
 		}
@@ -678,6 +779,8 @@ public class Actions {
 			newState = new State(temp);
 			newState.setParent(state);
 			state.addChild(newState);
+			newState.setParentMove('d');
+			newState.setCost(2);
 			return newState;
 
 		}
@@ -695,6 +798,8 @@ public class Actions {
 			newState = new State(temp);
 			newState.setParent(state);
 			state.addChild(newState);
+			newState.setParentMove('d');
+			newState.setCost(1);
 			return newState;
 
 		}
@@ -712,6 +817,8 @@ public class Actions {
 			newState = new State(temp);
 			newState.setParent(state);
 			state.addChild(newState);
+			newState.setParentMove('d');
+			newState.setCost(1);
 			return newState;
 
 		}
@@ -732,6 +839,8 @@ public class Actions {
 			newState.setParent(state);
 			state.addChild(newState);
 			//			System.out.println(newState);
+			newState.setParentMove('d');
+			newState.setCost(2);
 			return newState;
 
 		}
@@ -752,13 +861,17 @@ public class Actions {
 			newState.setParent(state);
 			state.addChild(newState);
 			//			System.out.println(newState);
+			newState.setParentMove('d');
+			newState.setCost(2);
 			return newState;
 
 		}
 		newState = new State(temp);
-		System.out.println("down: " + newState);
+//		System.out.println("down: " + newState);
 		newState.setParent(state);
 		state.addChild(newState);
+		newState.setParentMove('d');
+//		System.out.println("error");
 		return null;
 
 	}
@@ -782,6 +895,9 @@ public class Actions {
 			newState = new State(temp);
 			newState.setParent(state);
 			state.addChild(newState);
+			newState.setParentMove('u');
+//			System.out.println("newState char: " + newState.getParentMove());
+			newState.setCost(1);
 			return newState;
 
 		}
@@ -798,6 +914,8 @@ public class Actions {
 			newState = new State(temp);
 			newState.setParent(state);
 			state.addChild(newState);
+			newState.setParentMove('u');
+			newState.setCost(1);
 			return newState;
 
 		}
@@ -817,6 +935,8 @@ public class Actions {
 			newState = new State(temp);
 			newState.setParent(state);
 			state.addChild(newState);
+			newState.setParentMove('u');
+			newState.setCost(2);
 			return newState;
 
 		}
@@ -836,6 +956,8 @@ public class Actions {
 			newState = new State(temp);
 			newState.setParent(state);
 			state.addChild(newState);
+			newState.setParentMove('u');
+			newState.setCost(2);
 			return newState;
 
 		}
@@ -855,6 +977,8 @@ public class Actions {
 			newState = new State(temp);
 			newState.setParent(state);
 			state.addChild(newState);
+			newState.setParentMove('u');
+			newState.setCost(2);
 			return newState;
 
 		}
@@ -874,6 +998,8 @@ public class Actions {
 			newState = new State(temp);
 			newState.setParent(state);
 			state.addChild(newState);
+			newState.setParentMove('u');
+			newState.setCost(2);
 			return newState;
 
 		}
@@ -893,6 +1019,8 @@ public class Actions {
 			newState = new State(temp);
 			newState.setParent(state);
 			state.addChild(newState);
+			newState.setParentMove('u');
+			newState.setCost(2);
 			return newState;
 
 		}
@@ -912,6 +1040,8 @@ public class Actions {
 			newState = new State(temp);
 			newState.setParent(state);
 			state.addChild(newState);
+			newState.setParentMove('u');
+			newState.setCost(2);
 			return newState;
 
 		}
@@ -929,6 +1059,8 @@ public class Actions {
 			newState = new State(temp);
 			newState.setParent(state);
 			state.addChild(newState);
+			newState.setParentMove('u');
+			newState.setCost(1);
 			return newState;
 
 		}
@@ -946,6 +1078,8 @@ public class Actions {
 			newState = new State(temp);
 			newState.setParent(state);
 			state.addChild(newState);
+			newState.setParentMove('u');
+			newState.setCost(1);
 			return newState;
 
 		}
@@ -966,6 +1100,8 @@ public class Actions {
 			newState.setParent(state);
 			state.addChild(newState);
 			//					System.out.println(newState);
+			newState.setParentMove('u');
+			newState.setCost(2);
 			return newState;
 
 		}
@@ -986,16 +1122,39 @@ public class Actions {
 			newState.setParent(state);
 			state.addChild(newState);
 			//					System.out.println(newState);
+			newState.setParentMove('u');
+			newState.setCost(2);
 			return newState;
 
 		}
 		
-		System.out.println("up: " + newState);
+//		System.out.println("up: " + newState);
 		newState = new State(temp);
 		newState.setParent(state);
 		state.addChild(newState);
+		newState.setParentMove('u');
+//		System.out.println("error");
 		return null;
 
+	}
+	
+	// FIX THIS
+	public class SortQueueViaLowestCost implements Comparator {
+
+	    public int compare(Object o1, Object o2){
+	        State s1 = (State) o1; 
+	        State s2 = (State) o2;
+
+	        if( s1 == null || s2 == null ){
+	            if( s1 == s2 ) return 0;
+	            else if( s2 == null) return +1;
+	                else return -1;
+	        }
+
+	    Integer i1 = (Integer) s1.getCost();
+	    Integer i2 = (Integer) s2.getCost();
+	    return i2.compareTo(i1); // Not sure this is right.
+	    }
 	}
 
 

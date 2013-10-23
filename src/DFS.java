@@ -1,9 +1,13 @@
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Stack;
 
 
 public class DFS implements Search {
 
+	int count = 0;
+	
 	Stack<State> stack = new Stack<State>(); //stack for DFS, greedy + A* - priority queue
 	HashSet<State> visited = new HashSet<State>();
 
@@ -18,48 +22,86 @@ public class DFS implements Search {
 		}
 	
 		System.out.println("Reached Goal State!!");
+		System.out.println("in checkGoal");
+		ArrayList<Character> path = getPath(state);
+		System.out.println("path: " + getPath(state));
+		System.out.println("path copy: " + path);
+		System.out.println("count: " + count);
+		
+		Collections.reverse(path);
+		
+		System.out.print("Path: ");
+		for(int i = 0; i < path.size()/2; i++) {
+			System.out.print(path.get(i) + ", ");
+		}
+		System.out.println();
+//		System.out.println(path);
+//		int SIZE = path.size();
+//		System.out.println("Path: ");
+//		for(int i = SIZE - 1; i > 0; i--) {
+//			System.out.print(path.get(i));
+//		}
+//		System.out.println("Path: " + getPath(state));
 		return true;
 
+	}
+	
+	ArrayList<Character> path = new ArrayList<Character>();
+	public ArrayList<Character> getPath(State goal) {
+		
+		System.out.println("in getPath");
+		
+		if(goal.getParent() != null) {
+//			System.out.println("in getpath if");
+//			System.out.println("goal.getParentMove(): " + goal.getParentMove());
+			path.add(goal.getParentMove());
+//			System.out.println("path.size(): " + path.size());
+			getPath(goal.getParent());
+		}
+		
+		return path;
 	}
 
 	@Override
 	public State searchGoal(State currentState) {
 		
-		System.out.println("in search");
-		
 		// pass goal back up
 		// pass queue down
 		
 		// TODO Auto-generated method stub
+		
+		System.out.println("in searchGoal");
 
-		if(checkGoal(currentState)) {
+		if(checkGoal(currentState) == true) {
 			System.out.println("here");
 //			System.out.println("current state: " + currentState);
 //			System.out.println("goal state: " + goalState);
 //			goalState = currentState;
 //			currentState = goalState;
+//			System.out.println("poop");
+//			System.out.println("Path: " + getPath(currentState));
 			return currentState;
 		}
 		
-		System.out.println(currentState.toString());
 		stack.add(currentState);
-		
-		int count = 0;
 		
 		while(stack.size() != 0) {
 			
-			if(count == 4) {
-				break;
-			}
 			count++;
+//			System.out.println("char: " + currentState.getParentMove());
 
 			State temp = stack.pop();  //pop the head
 			visited.add(temp);
 			
+//			State lc = Actions.goLeft(temp, Actions.getPlayerPosition(temp));
+//			State rc = Actions.goRight(temp, Actions.getPlayerPosition(temp));
+//			State uc = Actions.goUp(temp, Actions.getPlayerPosition(temp));
+//			State dc = Actions.goDown(temp, Actions.getPlayerPosition(temp));
+			
 			State lc = Actions.goLeft(temp, Actions.getPlayerPosition(temp));
-			State rc = Actions.goRight(temp, Actions.getPlayerPosition(temp));
-			State uc = Actions.goUp(temp, Actions.getPlayerPosition(temp));
 			State dc = Actions.goDown(temp, Actions.getPlayerPosition(temp));
+			State uc = Actions.goUp(temp, Actions.getPlayerPosition(temp));
+			State rc = Actions.goRight(temp, Actions.getPlayerPosition(temp));
 
 			if(!visited.contains(lc) && !stack.contains(lc) && lc != null) {
 				if(checkGoal(lc)) {
@@ -67,7 +109,6 @@ public class DFS implements Search {
 				}
 				temp.addChild(lc);
 				this.stack.add(lc);
-				System.out.println("lc action");
 			}
 			
 			if(!visited.contains(rc) && !stack.contains(rc) && rc != null) {
@@ -76,7 +117,6 @@ public class DFS implements Search {
 				}
 				temp.addChild(rc);
 				this.stack.add(rc);
-				System.out.println("rc action");
 			}
 			
 			if(!visited.contains(uc) && !stack.contains(uc) && uc != null) {
@@ -85,8 +125,6 @@ public class DFS implements Search {
 				}
 				temp.addChild(uc);
 				this.stack.add(uc);
-				System.out.println("uc action");
-				System.out.println(uc);
 			}
 			
 			if(!visited.contains(dc) && !stack.contains(dc) && dc != null) {
@@ -95,8 +133,6 @@ public class DFS implements Search {
 				}
 				temp.addChild(dc);
 				this.stack.add(dc);
-				System.out.println("dc action");
-				System.out.println(uc);
 			}
 
 //			return searchGoal(currentState);
