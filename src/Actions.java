@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.Collections;
 
 
 public class Actions {
@@ -20,7 +20,6 @@ public class Actions {
 	    return copy;
 	}
 
-	// have an action to get the player position?
 	public static int[] getPlayerPosition(State state) {
 		int[] playerPosition = {0, 0};
 		ArrayList<ArrayList<String>> temp;
@@ -30,59 +29,18 @@ public class Actions {
 				if (temp.get(k).get(m).equals(String.valueOf('@'))) {
 					playerPosition[0] = k;
 					playerPosition[1] = m;
-					//					return playerPosition;
 				}
 			}
 		}
 		return playerPosition;
 	}
 	
-	public boolean isValidLeftMove (State state, int[] playerPosition) {
-		
-		ArrayList<ArrayList<String>> temp;
-		temp =  copy(state.getData());
-		
-		if((temp.get(playerPosition[0]).get(playerPosition[1]).equals("@") ||
-				temp.get(playerPosition[0]).get(playerPosition[1]).equals("+")) && 
-				temp.get(playerPosition[0]).get(playerPosition[1] - 1).equals("#")) {
-			
-			return false;
-			
-		}
-		
-		if((temp.get(playerPosition[0]).get(playerPosition[1]).equals("@") ||
-				temp.get(playerPosition[0]).get(playerPosition[1]).equals("+")) && 
-				temp.get(playerPosition[0]).get(playerPosition[1] - 1).equals("$") &&
-				temp.get(playerPosition[0]).get(playerPosition[1] - 2).equals("#")) {
-			
-			return false;
-			
-		}
-		
-		if(temp.get(playerPosition[0]).get(playerPosition[1]).equals("@") && 
-				temp.get(playerPosition[0]).get(playerPosition[1] - 1).equals("$") &&
-				temp.get(playerPosition[0]).get(playerPosition[1] - 2).equals("$")) {
-			
-			return false;
-			
-		}
-		
-		return true;
-		
-	}
-
 	public static State goLeft (State state, int[] playerPosition) {
 
 		ArrayList<ArrayList<String>> temp;
 		temp = copy(state.getData());
 		State newState = null;
-		//		System.out.println("in left");
-		//		System.out.println("state: " + state.toString());
-		//		System.out.println("temp array: " + temp);
 
-		//		System.out.println(SokobanTester.playerPosition[0] + " " + SokobanTester.playerPosition[1]);
-		//		System.out.println(Arrays.toString(Actions.getPlayerPosition(state)));
-		//		System.out.println("temp array: " + temp);
 
 		// 1
 		// if the space to the left of you is free, you can move left
@@ -96,7 +54,6 @@ public class Actions {
 			newState = new State(temp);
 			newState.setParent(state);
 			state.addChild(newState);
-			//			System.out.println(newState);
 			newState.setParentMove('l');
 			newState.setCost(1);
 			return newState;
@@ -115,7 +72,6 @@ public class Actions {
 			newState = new State(temp);
 			newState.setParent(state);
 			state.addChild(newState);
-			//			System.out.println(newState);
 			newState.setParentMove('l');
 			newState.setCost(1);
 			return newState;
@@ -137,7 +93,6 @@ public class Actions {
 			newState = new State(temp);
 			newState.setParent(state);
 			state.addChild(newState);
-			//			System.out.println(newState);
 			newState.setParentMove('l');
 			newState.setCost(2);
 			return newState;
@@ -159,7 +114,6 @@ public class Actions {
 			newState = new State(temp);
 			newState.setParent(state);
 			state.addChild(newState);
-			//			System.out.println(newState);
 			newState.setParentMove('l');
 			newState.setCost(2);
 			return newState;
@@ -181,7 +135,6 @@ public class Actions {
 			newState = new State(temp);
 			newState.setParent(state);
 			state.addChild(newState);
-			//			System.out.println(newState);
 			newState.setParentMove('l');
 			newState.setCost(2);
 			return newState;
@@ -203,7 +156,6 @@ public class Actions {
 			newState = new State(temp);
 			newState.setParent(state);
 			state.addChild(newState);
-			//			System.out.println(newState);
 			newState.setParentMove('l');
 			newState.setCost(2);
 			return newState;
@@ -225,7 +177,6 @@ public class Actions {
 			newState = new State(temp);
 			newState.setParent(state);
 			state.addChild(newState);
-			//			System.out.println(newState);
 			newState.setParentMove('l');
 			newState.setCost(2);
 			return newState;
@@ -247,7 +198,6 @@ public class Actions {
 			newState = new State(temp);
 			newState.setParent(state);
 			state.addChild(newState);
-			//			System.out.println(newState);
 			newState.setParentMove('l');
 			newState.setCost(2);
 			return newState;
@@ -267,7 +217,6 @@ public class Actions {
 			newState = new State(temp);
 			newState.setParent(state);
 			state.addChild(newState);
-			//			System.out.println(newState);
 			newState.setParentMove('l');
 			newState.setCost(1);
 			return newState;
@@ -287,7 +236,6 @@ public class Actions {
 			newState = new State(temp);
 			newState.setParent(state);
 			state.addChild(newState);
-			//			System.out.println(newState);
 			newState.setParentMove('l');
 			newState.setCost(1);
 			return newState;
@@ -309,7 +257,6 @@ public class Actions {
 			newState = new State(temp);
 			newState.setParent(state);
 			state.addChild(newState);
-			//			System.out.println(newState);
 			newState.setParentMove('l');
 			newState.setCost(2);
 			return newState;
@@ -331,7 +278,6 @@ public class Actions {
 			newState = new State(temp);
 			newState.setParent(state);
 			state.addChild(newState);
-			//			System.out.println(newState);
 			newState.setParentMove('l');
 			newState.setCost(2);
 			return newState;
@@ -339,13 +285,11 @@ public class Actions {
 		}
 
 		newState = new State(temp);
-//		System.out.println("left: " + newState);
 		newState.setParent(state);
 		state.addChild(newState);
-		//		System.out.println(newState);
 		newState.setParentMove('l');
-//		System.out.println("error");
-		return null;
+		newState.setCost(0);
+		return newState;
 
 	}
 	
@@ -610,8 +554,9 @@ public class Actions {
 		newState.setParent(state);
 		state.addChild(newState);
 		newState.setParentMove('r');
+		newState.setCost(0);
 //		System.out.println("error");
-		return null;
+		return newState;
 
 	}
 
@@ -871,8 +816,9 @@ public class Actions {
 		newState.setParent(state);
 		state.addChild(newState);
 		newState.setParentMove('d');
+		newState.setCost(0);
 //		System.out.println("error");
-		return null;
+		return newState;
 
 	}
 
@@ -1133,29 +1079,78 @@ public class Actions {
 		newState.setParent(state);
 		state.addChild(newState);
 		newState.setParentMove('u');
+		newState.setCost(0);
 //		System.out.println("error");
-		return null;
+		return newState;
 
+	}
+
+	/**
+	 * Gets all the box locations from a state
+	 * @param state
+	 * @return boxList - an ArrayList of box coordinate pairs
+	 */
+	public static ArrayList<int[]> getBoxLocations(State state) {
+		ArrayList<int[]> boxList = new ArrayList<int[]>();
+		int[] boxPosition = {0, 0};
+		ArrayList<ArrayList<String>> temp;
+		temp = copy(state.getData());
+		for (int k = 0; k < temp.size(); k++) {
+			for(int m = 0; m < temp.get(k).size(); m++) {
+				if (temp.get(k).get(m).equals("$")) {
+					boxPosition[0] = k;
+					boxPosition[1] = m;
+					boxList.add(boxPosition);
+					continue;
+				}
+			}
+			
+			for(int m = 0; m < temp.get(k).size(); m++) {
+				if (temp.get(k).get(m).equals("*")) {
+					boxPosition[0] = k;
+					boxPosition[1] = m;
+					boxList.add(boxPosition);
+					continue;
+				}
+			}
+		}
+		
+		return boxList;
+		
 	}
 	
-	// FIX THIS
-	public class SortQueueViaLowestCost implements Comparator {
-
-	    public int compare(Object o1, Object o2){
-	        State s1 = (State) o1; 
-	        State s2 = (State) o2;
-
-	        if( s1 == null || s2 == null ){
-	            if( s1 == s2 ) return 0;
-	            else if( s2 == null) return +1;
-	                else return -1;
-	        }
-
-	    Integer i1 = (Integer) s1.getCost();
-	    Integer i2 = (Integer) s2.getCost();
-	    return i2.compareTo(i1); // Not sure this is right.
-	    }
+	/**
+	 * Gets all the goal locations from a state
+	 * @param state
+	 * @return goalList - an ArrayList of goal coordinate pairs
+	 */
+	public static ArrayList<int[]> getGoalLocations(State state) {
+		ArrayList<int[]> goalList = new ArrayList<int[]>();
+		int[] goalPosition = {0, 0};
+		ArrayList<ArrayList<String>> temp;
+		temp = copy(state.getData());
+		for (int k = 0; k < temp.size(); k++) {
+			for(int m = 0; m < temp.get(k).size(); m++) {
+				if (temp.get(k).get(m).equals(".")) {
+					goalPosition[0] = k;
+					goalPosition[1] = m;
+					goalList.add(goalPosition);
+					continue;
+				}
+			}
+			
+			for(int m = 0; m < temp.get(k).size(); m++) {
+				if (temp.get(k).get(m).equals("*")) {
+					goalPosition[0] = k;
+					goalPosition[1] = m;
+					goalList.add(goalPosition);
+					continue;
+				}
+			}
+		}
+		
+		return goalList;
+		
 	}
-
-
+	
 }

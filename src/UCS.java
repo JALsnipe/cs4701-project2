@@ -1,13 +1,22 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.PriorityQueue;
+
+// Implementation of Uniform Cost Search.
 
 public class UCS implements Search {
 
-	int count = 0;
+	int totalNodesGenerated = 0;
+	int nodesGeneratedPreviously = 0;
+	int nodesOnFringe = 0;
+	int nodesOnExploredList = 0;
 	
-	PriorityQueue<State> frontier = new PriorityQueue<State>(); //stack for DFS, greedy + A* - priority frontier
+	long startTime;
+	long endTime;
+	long totalTime;
+	double BILLION = 1000000000.0;
+	
+	ArrayList<State> frontier = new ArrayList<State>(); //greedy + A* - priority queue
 	HashSet<State> visited = new HashSet<State>();
 
 	public boolean checkGoal(State state) {
@@ -20,65 +29,50 @@ public class UCS implements Search {
 			}
 		}
 	
-		System.out.println("Reached Goal State!!");
-		System.out.println("in checkGoal");
-		ArrayList<Character> path = getPath(state);
-		System.out.println("path: " + getPath(state));
-		System.out.println("path copy: " + path);
-		System.out.println("count: " + count);
+		endTime = System.nanoTime(); 
+		
+		System.out.println("Reached goal state!");
+		ArrayList<Character> path = new ArrayList<Character>();
+		getPath(path, state);
+		System.out.println("path: " + path);
+		System.out.println("Nodes generated: " + totalNodesGenerated);
+		System.out.println("nodes containing states that were generated previously: " + nodesGeneratedPreviously);
+		nodesOnFringe = frontier.size();
+		System.out.println("Nodes on fringe: " + nodesOnFringe);
+		nodesOnExploredList = visited.size();
+		System.out.println("Nodes on explored list: " + nodesOnExploredList);
+		totalTime = endTime - startTime;
+		double printTime = totalTime/BILLION; //nanoseconds / 1000000000 = seconds
+		System.out.println("Run time in seconds: " + printTime);
 		
 		Collections.reverse(path);
 		
 		System.out.print("Path: ");
-		for(int i = 0; i < path.size()/2; i++) {
+		for(int i = 0; i < path.size(); i++) {
 			System.out.print(path.get(i) + ", ");
 		}
-		System.out.println();
-//		System.out.println(path);
-//		int SIZE = path.size();
-//		System.out.println("Path: ");
-//		for(int i = SIZE - 1; i > 0; i--) {
-//			System.out.print(path.get(i));
-//		}
-//		System.out.println("Path: " + getPath(state));
+
 		return true;
 
 	}
 	
-	ArrayList<Character> path = new ArrayList<Character>();
-	public ArrayList<Character> getPath(State goal) {
-		
-		System.out.println("in getPath");
+public void getPath(ArrayList recorder, State goal) {
 		
 		if(goal.getParent() != null) {
-//			System.out.println("in getpath if");
-//			System.out.println("goal.getParentMove(): " + goal.getParentMove());
-			path.add(goal.getParentMove());
-//			System.out.println("path.size(): " + path.size());
-			getPath(goal.getParent());
+			recorder.add(goal.getParentMove());
+			getPath(recorder, goal.getParent());
 		}
-		
-		return path;
 	}
 
 	@Override
 	public State searchGoal(State currentState) {
 		
+		startTime = System.nanoTime();
+		
 		// pass goal back up
 		// pass frontier down
-		
-		// TODO Auto-generated method stub
-		
-		System.out.println("in searchGoal");
 
 		if(checkGoal(currentState) == true) {
-			System.out.println("here");
-//			System.out.println("current state: " + currentState);
-//			System.out.println("goal state: " + goalState);
-//			goalState = currentState;
-//			currentState = goalState;
-//			System.out.println("poop");
-//			System.out.println("Path: " + getPath(currentState));
 			return currentState;
 		}
 		
@@ -86,10 +80,28 @@ public class UCS implements Search {
 		
 		while(frontier.size() != 0) {
 			
-			count++;
-//			System.out.println("char: " + currentState.getParentMove());
+			if(totalNodesGenerated == 40000) {
+				endTime = System.nanoTime(); 
+				
+				System.out.println("Traversed 40000 nodes without finding a solution");
+				// I do this to avoid any Java heap memory errors.
+				System.out.println("Nodes generated: " + totalNodesGenerated);
+				System.out.println("nodes containing states that were generated previously: " + nodesGeneratedPreviously);
+				nodesOnFringe = frontier.size();
+				System.out.println("Nodes on fringe: " + nodesOnFringe);
+				nodesOnExploredList = visited.size();
+				System.out.println("Nodes on explored list: " + nodesOnExploredList);
+				totalTime = endTime - startTime;
+				double printTime = totalTime/BILLION; //nanoseconds / 1000000000 = seconds
+				System.out.println("Run time in seconds: " + printTime);
+				break;
+			}
+			
+			totalNodesGenerated++;
 
-			State temp = frontier.poll();  //pop the head
+			Collections.sort(frontier, new SortQueueViaLowestCost());
+			
+			State temp = frontier.get(0);  //pop the head
 			visited.add(temp);
 			
 			State lc = Actions.goLeft(temp, Actions.getPlayerPosition(temp));
@@ -103,6 +115,10 @@ public class UCS implements Search {
 				}
 				temp.addChild(lc);
 				this.frontier.add(lc);
+			}
+			
+			if(visited.contains(lc)) {
+				nodesGeneratedPreviously++;
 			}
 			
 			if(!visited.contains(rc) && !frontier.contains(rc) && rc != null) {
@@ -129,12 +145,9 @@ public class UCS implements Search {
 				this.frontier.add(dc);
 			}
 
-//			return searchGoal(currentState);
-
 		}
 		
 		return null;
-//		return searchGoal(currentState);
 		
 	}
 

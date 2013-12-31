@@ -1,11 +1,10 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Stack;
 
-// Implementation of Depth First Search.
+// Greedy best first search with Euclidian distance
 
-public class DFS implements Search {
+public class GBFSEuc implements Search {
 
 	int totalNodesGenerated = 0;
 	int nodesGeneratedPreviously = 0;
@@ -17,7 +16,7 @@ public class DFS implements Search {
 	long totalTime;
 	double BILLION = 1000000000.0;
 	
-	Stack<State> stack = new Stack<State>(); //stack for DFS, greedy + A* - priority queue
+	ArrayList<State> frontier = new ArrayList<State>(); //greedy + A* - priority queue
 	HashSet<State> visited = new HashSet<State>();
 
 	public boolean checkGoal(State state) {
@@ -30,7 +29,7 @@ public class DFS implements Search {
 			}
 		}
 	
-		endTime = System.nanoTime(); 
+endTime = System.nanoTime();
 		
 		System.out.println("Reached goal state!");
 		ArrayList<Character> path = new ArrayList<Character>();
@@ -38,7 +37,7 @@ public class DFS implements Search {
 		System.out.println("path: " + path);
 		System.out.println("Nodes generated: " + totalNodesGenerated);
 		System.out.println("nodes containing states that were generated previously: " + nodesGeneratedPreviously);
-		nodesOnFringe = stack.size();
+		nodesOnFringe = frontier.size();
 		System.out.println("Nodes on fringe: " + nodesOnFringe);
 		nodesOnExploredList = visited.size();
 		System.out.println("Nodes on explored list: " + nodesOnExploredList);
@@ -57,7 +56,7 @@ public class DFS implements Search {
 
 	}
 	
-	public void getPath(ArrayList recorder, State goal) {
+public void getPath(ArrayList recorder, State goal) {
 		
 		if(goal.getParent() != null) {
 			recorder.add(goal.getParentMove());
@@ -71,15 +70,15 @@ public class DFS implements Search {
 		startTime = System.nanoTime();
 		
 		// pass goal back up
-		// pass queue down
+		// pass frontier down
 
 		if(checkGoal(currentState) == true) {
 			return currentState;
 		}
 		
-		stack.add(currentState);
+		frontier.add(currentState);
 		
-		while(stack.size() != 0) {
+		while(frontier.size() != 0) {
 			
 			totalNodesGenerated++;
 			
@@ -90,7 +89,7 @@ public class DFS implements Search {
 				// I do this to avoid any Java heap memory errors.
 				System.out.println("Nodes generated: " + totalNodesGenerated);
 				System.out.println("nodes containing states that were generated previously: " + nodesGeneratedPreviously);
-				nodesOnFringe = stack.size();
+				nodesOnFringe = frontier.size();
 				System.out.println("Nodes on fringe: " + nodesOnFringe);
 				nodesOnExploredList = visited.size();
 				System.out.println("Nodes on explored list: " + nodesOnExploredList);
@@ -100,7 +99,9 @@ public class DFS implements Search {
 				break;
 			}
 
-			State temp = stack.pop();  //pop the head
+			Collections.sort(frontier, new SortQueueViaLowestCost());
+			
+			State temp = frontier.get(0);  //pop the head
 			visited.add(temp);
 			
 			State lc = Actions.goLeft(temp, Actions.getPlayerPosition(temp));
@@ -112,55 +113,58 @@ public class DFS implements Search {
 				nodesGeneratedPreviously++;
 			}
 
-			if(!visited.contains(lc) && !stack.contains(lc) && lc != null) {
+			if(!visited.contains(lc) && !frontier.contains(lc) && lc != null) {
 				if(checkGoal(lc)) {
 					return lc;
 				}
+				lc.setCost(Euclidean.EuclideanCalc(Actions.getBoxLocations(currentState), Actions.getGoalLocations(currentState)));
 				temp.addChild(lc);
-				this.stack.add(lc);
+				this.frontier.add(lc);
 			}
 			
 			if(visited.contains(rc)) {
 				nodesGeneratedPreviously++;
 			}
 			
-			if(!visited.contains(rc) && !stack.contains(rc) && rc != null) {
+			if(!visited.contains(rc) && !frontier.contains(rc) && rc != null) {
 				if(checkGoal(rc)) {
 					return rc;
 				}
-				
+				rc.setCost(Euclidean.EuclideanCalc(Actions.getBoxLocations(currentState), Actions.getGoalLocations(currentState)));
 				temp.addChild(rc);
-				this.stack.add(rc);
+				this.frontier.add(rc);
 			}
 			
 			if(visited.contains(uc)) {
 				nodesGeneratedPreviously++;
 			}
 			
-			if(!visited.contains(uc) && !stack.contains(uc) && uc != null) {
+			if(!visited.contains(uc) && !frontier.contains(uc) && uc != null) {
 				if(checkGoal(uc)) {
 					return uc;
 				}
-
+				uc.setCost(Euclidean.EuclideanCalc(Actions.getBoxLocations(currentState), Actions.getGoalLocations(currentState)));
 				temp.addChild(uc);
-				this.stack.add(uc);
+				this.frontier.add(uc);
 			}
 			
 			if(visited.contains(dc)) {
 				nodesGeneratedPreviously++;
 			}
 			
-			if(!visited.contains(dc) && !stack.contains(dc) && dc != null) {
+			if(!visited.contains(dc) && !frontier.contains(dc) && dc != null) {
 				if(checkGoal(dc)) {
 					return dc;
 				}
-
+				dc.setCost(Euclidean.EuclideanCalc(Actions.getBoxLocations(currentState), Actions.getGoalLocations(currentState)));
 				temp.addChild(dc);
-				this.stack.add(dc);
+				this.frontier.add(dc);
 			}
+
 		}
 		
-	return null;
-	
+		return null;
+		
 	}
+
 }

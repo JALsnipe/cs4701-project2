@@ -21,10 +21,8 @@ public class SokobanTester {
 				ArrayList<String> line = new ArrayList<String>();
 				String theString;
 				theString = in.nextLine();
-				//System.out.println(theString);
 
 				char[] charArray = theString.toCharArray();
-				//System.out.println(charArray);
 
 				for(int j = 0; j < charArray.length; j++) {
 					line.add(String.valueOf(charArray[j]));
@@ -36,19 +34,15 @@ public class SokobanTester {
 			System.out.println("File loaded!");
 
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			System.out.println("Load failed!  Make sure your puzzle is named puzzle.txt and is in the appropriate directory");
-			e.printStackTrace();
+			System.exit(1);
 		}
 		return puzzle;
 	}
 
 	public static void main(String[] args) {
 		
-//		ArrayList<ArrayList<String>> puzzle = loadFile("puzzle.txt");
-//		ArrayList<ArrayList<String>> puzzle = loadFile("left.txt");
-//		ArrayList<ArrayList<String>> puzzle = loadFile("weird.txt");
-		ArrayList<ArrayList<String>> puzzle = loadFile("easy11.txt");
+		ArrayList<ArrayList<String>> puzzle = loadFile("puzzle.txt");
 
 		State parent = new State(puzzle);
 		
@@ -56,8 +50,10 @@ public class SokobanTester {
 		System.out.println("1) Breadth first search");
 		System.out.println("2) Depth first search");
 		System.out.println("3) Uniform cost search");
-		System.out.println("4) Greedy best first search");
-		System.out.println("5) A* search");
+		System.out.println("4) Greedy best first search - Manhattan Distance");
+		System.out.println("5) Greedy best first search - Euclidian Distance");
+		System.out.println("6) A* search - Manhattan Distance");
+		System.out.println("7) A* search - Euclidian Distance");
 		System.out.println("Please enter your selection: ");
 		
 		Scanner input = new Scanner(System.in);
@@ -65,19 +61,29 @@ public class SokobanTester {
 		
 		if (selection == 1) {
 			BFS bfs = new BFS();
-			System.out.println("Goal State: " + bfs.searchGoal(parent));
-		}
-		
-		else if (selection == 2) {
+			bfs.searchGoal(parent);
+		} else if (selection == 2) {
 			DFS dfs = new DFS();
-			System.out.println("Goal State: " + dfs.searchGoal(parent));
+			dfs.searchGoal(parent);
+		} else if (selection == 3) {
+			UCS ucs = new UCS();
+			ucs.searchGoal(parent);
+		} else if (selection == 4) {
+			GBFSMan gbfsMan = new GBFSMan();
+			gbfsMan.searchGoal(parent);
+		} else if (selection == 5) {
+			GBFSEuc gbfsEuc = new GBFSEuc();
+			gbfsEuc.searchGoal(parent);
+		} else if (selection == 6) {
+			AStarMan aStarMan = new AStarMan();
+			aStarMan.searchGoal(parent);
+		} else if (selection == 7) {
+			AStarEuc aStarEuc = new AStarEuc();
+			aStarEuc.searchGoal(parent);
 		} else {
 			System.out.println("Invalid Input!");
 			System.exit(1);
 		}
-
-		
-		
 	}
 
 }

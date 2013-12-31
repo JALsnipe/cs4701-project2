@@ -1,0 +1,245 @@
+Sokoban Puzzle Tests
+
+Puzzle:
+5
+#####
+#@  #
+# $ #
+#  .#
+#####
+
+BFS:
+Reached goal state!
+Nodes generated: 35
+nodes containing states that were generated previously: 0
+Nodes on fringe: 29
+Nodes on explored list: 35
+Run time in seconds: 0.034147
+Path: r, d, l, d, r, 
+
+DFS:
+Traversed 40000 nodes without finding a solution
+Nodes generated: 40000
+nodes containing states that were generated previously: 0
+Nodes on fringe: 8
+Nodes on explored list: 39999
+Run time in seconds: 1.692614
+
+UCS:
+Traversed 40000 nodes without finding a solution
+Nodes generated: 40000
+nodes containing states that were generated previously: 0
+Nodes on fringe: 3
+Nodes on explored list: 1
+Run time in seconds: 1.540094
+
+GBF - Manhattan Distance:
+Traversed 40000 nodes without finding a solution
+Nodes generated: 40000
+nodes containing states that were generated previously: 0
+Nodes on fringe: 3
+Nodes on explored list: 1
+Run time in seconds: 1.382670239207102E9
+
+GBF - Euclidian Distance:
+Traversed 40000 nodes without finding a solution
+Nodes generated: 40000
+nodes containing states that were generated previously: 0
+Nodes on fringe: 3
+Nodes on explored list: 1
+Run time in seconds: 1.563197
+
+A* - Manhattan Distance:
+Traversed 40000 nodes without finding a solution
+Nodes generated: 40000
+nodes containing states that were generated previously: 0
+Nodes on fringe: 3
+Nodes on explored list: 1
+Run time in seconds: -2.0
+
+A* - Euclidian Distance:
+Traversed 40000 nodes without finding a solution
+Nodes generated: 40000
+nodes containing states that were generated previously: 0
+Nodes on fringe: 3
+Nodes on explored list: 1
+Run time in seconds: -2.0
+
+5
+######
+#@ ..#
+# $$ #
+#    #
+######
+
+BFS:
+Reached goal state!
+Nodes generated: 724
+nodes containing states that were generated previously: 0
+Nodes on fringe: 200
+Nodes on explored list: 724
+Run time in seconds: 0.167979
+Path: d, d, r, u, l, u, r, d, r, d, r, u, 
+
+DFS:
+Traversed 40000 nodes without finding a solution
+Nodes generated: 40000
+nodes containing states that were generated previously: 0
+Nodes on fringe: 7
+Nodes on explored list: 39999
+Run time in seconds: 1.578586
+
+UCS:
+Traversed 40000 nodes without finding a solution
+Nodes generated: 40000
+nodes containing states that were generated previously: 0
+Nodes on fringe: 3
+Nodes on explored list: 1
+Run time in seconds: 1.520089
+
+GBF - Manhattan Distance:
+Traversed 40000 nodes without finding a solution
+Nodes generated: 40000
+nodes containing states that were generated previously: 0
+Nodes on fringe: 3
+Nodes on explored list: 1
+Run time in seconds: 1.3826704356366231E9
+
+GBF - Euclidian Distance:
+Traversed 40000 nodes without finding a solution
+Nodes generated: 40000
+nodes containing states that were generated previously: 0
+Nodes on fringe: 3
+Nodes on explored list: 1
+Run time in seconds: 1.649099
+
+A* - Manhattan Distance:
+Traversed 40000 nodes without finding a solution
+Nodes generated: 40000
+nodes containing states that were generated previously: 0
+Nodes on fringe: 3
+Nodes on explored list: 1
+Run time in seconds: -2.0
+
+A* - Euclidian Distance:
+Traversed 40000 nodes without finding a solution
+Nodes generated: 40000
+nodes containing states that were generated previously: 0
+Nodes on fringe: 3
+Nodes on explored list: 1
+Run time in seconds: -2.0
+
+Puzzle:
+7
+####
+# .#
+#  ###
+#*@  #
+#  $ #
+#    #
+######
+
+BFS:
+Reached goal state!
+Nodes generated: 338
+nodes containing states that were generated previously: 0
+Nodes on fringe: 140
+Nodes on explored list: 338
+Run time in seconds: 0.134539
+Path: r, r, d, l, d, l, u, u, u, 
+
+DFS:
+Traversed 40000 nodes without finding a solution
+Nodes generated: 40000
+nodes containing states that were generated previously: 0
+Nodes on fringe: 9
+Nodes on explored list: 39999
+Run time in seconds: 5.396936
+
+UCS:
+Traversed 40000 nodes without finding a solution
+Nodes generated: 40000
+nodes containing states that were generated previously: 0
+Nodes on fringe: 4
+Nodes on explored list: 1
+Run time in seconds: 3.692778
+
+GBF - Manhattan Distance:
+Traversed 40000 nodes without finding a solution
+Nodes generated: 40000
+nodes containing states that were generated previously: 0
+Nodes on fringe: 4
+Nodes on explored list: 1
+Run time in seconds: 1.38266972739918E9
+
+GBF - Euclidian Distance:
+Traversed 40000 nodes without finding a solution
+Nodes generated: 40000
+nodes containing states that were generated previously: 0
+Nodes on fringe: 4
+Nodes on explored list: 1
+Run time in seconds: 3.733934
+
+A* - Manhattan Distance:
+Traversed 40000 nodes without finding a solution
+Nodes generated: 40000
+nodes containing states that were generated previously: 0
+Nodes on fringe: 4
+Nodes on explored list: 1
+Run time in seconds: -5.0
+
+A* - Euclidian Distance:
+Traversed 40000 nodes without finding a solution
+Nodes generated: 40000
+nodes containing states that were generated previously: 0
+Nodes on fringe: 4
+Nodes on explored list: 1
+Run time in seconds: -5.0
+
+11
+ ###########
+ #         #
+ #         #
+ #  . . .  #
+ #    $    #
+ #    $    #
+ #    $    #
+ #         #
+ #    @    #
+ #         #
+ ###########
+
+BFS:
+Crashes or runs for 30+ minutes
+java.lang.OutOfMemoryError: Java heap space
+(even with 40000 node depth cap)
+
+DFS:
+Crashes or runs for 30+ minutes
+java.lang.OutOfMemoryError: Java heap space
+(even with 40000 node depth cap)
+
+UCS:
+Crashes or runs for 30+ minutes
+java.lang.OutOfMemoryError: Java heap space
+(even with 40000 node depth cap)
+
+GBF - Manhattan Distance:
+Crashes or runs for 30+ minutes
+java.lang.OutOfMemoryError: Java heap space
+(even with 40000 node depth cap)
+
+GBF - Euclidian Distance:
+Crashes or runs for 30+ minutes
+java.lang.OutOfMemoryError: Java heap space
+(even with 40000 node depth cap)
+
+A* - Manhattan Distance:
+Crashes or runs for 30+ minutes
+java.lang.OutOfMemoryError: Java heap space
+(even with 40000 node depth cap)
+
+A* - Euclidian Distance:
+Crashes or runs for 30+ minutes
+java.lang.OutOfMemoryError: Java heap space
+(even with 40000 node depth cap)
